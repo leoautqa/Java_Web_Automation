@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Cucumber" time="390.676" tests="26" skipped="0" failures="0" errors="0">
+<testcase classname="Administrator Account" name="01 Tab home" time="14.668">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Home tab........................................................passed
+Then Page must load correctly...............................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="02 Create an account with out data" time="14.942">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Cadastrar Usuários tab..........................................passed
+When Do the registration....................................................passed
+Then Message alert register on Register Users...............................passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="03 Create a regular account" time="17.259">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Cadastrar Usuários tab..........................................passed
+When Complete Regular registration..........................................passed
+And Do the registration.....................................................passed
+Then Regular registration must be on the list...............................passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="04 Create an account that already exists" time="18.178">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Cadastrar Usuários tab..........................................passed
+When Complete Regular registration..........................................passed
+And Do the registration.....................................................passed
+And Regular registration must be on the list................................passed
+When Be at Cadastrar Usuários tab...........................................passed
+And Complete registration already exists....................................passed
+And Do the registration.....................................................passed
+Then Message stating that this account already exists on Register Users.....passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="05 Create an administrator account" time="17.206">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Cadastrar Usuários tab..........................................passed
+When Complete Administrator registration....................................passed
+And Do the registration.....................................................passed
+Then Administrator registration must be on the list.........................passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="06 Edit an account" time="17.183">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Cadastrar Usuários tab..........................................passed
+When Complete Regular registration..........................................passed
+And Do the registration.....................................................passed
+And Regular registration must be on the list................................passed
+When Edit account...........................................................passed
+Then Account must be edited.................................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="07 Delete an account" time="17.339">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Cadastrar Usuários tab..........................................passed
+When Complete Regular registration..........................................passed
+And Do the registration.....................................................passed
+And Regular registration must be on the list................................passed
+When Dekete account.........................................................passed
+Then Account must be deleted................................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="08 Create a product with no date" time="14.593">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Cadastrar Produtos tab..........................................passed
+When Click button register..................................................passed
+Then Alert message should appear............................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="09 Register a product with a zero price" time="14.904">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Cadastrar Produtos tab..........................................passed
+When Fill product information with zero price...............................passed
+And Click button register...................................................passed
+Then Message price must be positive should be visible.......................passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="10 Register a product with a negative quantity" time="14.736">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Cadastrar Produtos tab..........................................passed
+When Fill product information with negative quantity........................passed
+And Click button register...................................................passed
+Then Message quantity must be more or equal than zero should be visible.....passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="11 Register a product" time="16.867">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Cadastrar Produtos tab..........................................passed
+When Fill in product information............................................passed
+And Click button register...................................................passed
+Then Product must be on the list............................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="12 Register a product with no quantity" time="16.62">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Cadastrar Produtos tab..........................................passed
+When Fill in product no quantity............................................passed
+And Click button register...................................................passed
+Then Product must be on the list............................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="13 Register a product with no picture" time="16.648">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Cadastrar Produtos tab..........................................passed
+When Fill in product no picture.............................................passed
+And Click button register...................................................passed
+Then Product must be on the list............................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="14 Register a product that already exists" time="14.922">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Cadastrar Produtos tab..........................................passed
+When Fill in product no quantity............................................passed
+And Click button register...................................................passed
+Then Message that the product already exists should appear..................passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="15 Edit a product" time="14.863">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Listar Produtos tab.............................................passed
+When Find product No picture................................................passed
+And Edit the item No picture................................................passed
+Then Product should be edited...............................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Administrator Account" name="16 Delete a product" time="25.728">
+<system-out><![CDATA[
+Given I am logged in as administrator.......................................passed
+Given Be at Listar Produtos tab.............................................passed
+When Find product No picture................................................passed
+And Delete the item No picture..............................................passed
+Then Product should be deleted..............................................passed
+]]></system-out>
+</testcase>
+<testcase classname="login" name="01 Login with out E-mail and password" time="4.641">
+<system-out><![CDATA[
+Given Website loaded........................................................passed
+When Submit login...........................................................passed
+Then Mandatory email and password messages..................................passed
+]]></system-out>
+</testcase>
+<testcase classname="login" name="02 Login with invalid E-mail and password" time="4.627">
+<system-out><![CDATA[
+Given Website loaded........................................................passed
+When Report invalid data....................................................passed
+And Submit login............................................................passed
+Then Invalid email and password message.....................................passed
+]]></system-out>
+</testcase>
+<testcase classname="login" name="03 Create an account with out data" time="4.437">
+<system-out><![CDATA[
+Given Website loaded........................................................passed
+When Registering a new profile..............................................passed
+And Send registration.......................................................passed
+Then Mandatory message......................................................passed
+]]></system-out>
+</testcase>
+<testcase classname="login" name="04 Create an account" time="5.313">
+<system-out><![CDATA[
+Given Website loaded........................................................passed
+When Registering a new profile..............................................passed
+And Fill in valid data......................................................passed
+When Send registration......................................................passed
+Then Successful registration message........................................passed
+]]></system-out>
+</testcase>
+<testcase classname="login" name="05 Create an account that already exists" time="8.912">
+<system-out><![CDATA[
+Given Website loaded........................................................passed
+When Registering a new profile..............................................passed
+And Fill in data that already exists........................................passed
+When Send registration......................................................passed
+Then Message this account already exists....................................passed
+]]></system-out>
+</testcase>
+<testcase classname="login" name="06 Create an administrator account" time="4.804">
+<system-out><![CDATA[
+Given Website loaded........................................................passed
+When Registering a new profile..............................................passed
+And Filling an administrator profile........................................passed
+When Send registration......................................................passed
+Then Successful registration message........................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Regular Account" name="01 Tab Home" time="16.434">
+<system-out><![CDATA[
+Given I am logged in as regular.............................................passed
+Given On the Home tab.......................................................passed
+When Search for a product that does not exist...............................passed
+And Search..................................................................passed
+Then Show no results........................................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Regular Account" name="02 Detail product" time="24.796">
+<system-out><![CDATA[
+Given I am logged in as regular.............................................passed
+Given On the Home tab.......................................................passed
+When Search for a product...................................................passed
+And Detail the product......................................................passed
+Then Product details must be visible........................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Regular Account" name="03: Clear shopping list" time="25.128">
+<system-out><![CDATA[
+Given I am logged in as regular.............................................passed
+Given On the Home tab.......................................................passed
+When Search for a product...................................................passed
+And Click in Adicionar a lista..............................................passed
+When Click in Limpar Lista..................................................passed
+Then Message Seu carrinho está vazio must be visible........................passed
+]]></system-out>
+</testcase>
+<testcase classname="Regular Account" name="04: Shopping cart" time="24.705">
+<system-out><![CDATA[
+Given I am logged in as regular.............................................passed
+Given On the Home tab.......................................................passed
+When Search for a product...................................................passed
+And Click in Adicionar a lista..............................................passed
+When Click in Adicionar no carrinho.........................................passed
+Then The product must be in the shopping cart...............................passed
+]]></system-out>
+</testcase>
+</testsuite>
