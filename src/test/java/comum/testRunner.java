@@ -6,11 +6,13 @@ import io.cucumber.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features="src/test/resources/feature",
-				 glue= {"pageObject"},
+				 glue= {"pageObject", "comum"},
 				 monochrome=true,
+				 //plugin= {"com.aventstark.extenreport.cucumber.adapter.ExtentCucumberAdapter:"},
 				 plugin= {"pretty", "junit:target/JUnitReports/report.xml",
 						  			"json:target/JSONReports/report.json",
 						  			"html:terget/HtmlReports"},
+						  			//"com.aventstark.extenreport.cucumber.adapter.ExtentCucumberAdapter:"},
 				 tags="@regression"
 				)
 

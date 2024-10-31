@@ -1,5 +1,5 @@
 @regression @login
-Feature: login
+Feature: Login
 
   @log01
   Scenario: 01 Login with out E-mail and password

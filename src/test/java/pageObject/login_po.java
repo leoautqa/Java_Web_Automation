@@ -1,62 +1,40 @@
 package pageObject;
 
 import java.time.Duration;
-import java.util.NoSuchElementException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.github.javafaker.Faker;
 
-import comum.comum;
-import comum.variables;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
+import comum.hooks;
+
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import locators.login_locator;
-import locators.regularAccount_locator;
 
 public class login_po {
 	
 	private WebDriver driver;
 	private WebDriverWait wait;
+	public Scenario scenario;
 	private Faker faker = new Faker();	
 	private String name = faker.name().fullName();
     private String email = faker.internet().emailAddress();
     private String password = faker.internet().password();
-        
+    
 	administratorAccount_po administratorAccount = new administratorAccount_po();
-
-	@Before
-	public void setUp() {
-		driver = comum.getWebDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		administratorAccount.implementation(driver);
-	}
-
-	@After
-	public void tearDown() {
-		comum.tearDown();
-	}
 	
-	public boolean scrollElementIntoView_status(WebElement element) {
-    	try {
-            Actions actions = new Actions(driver);
-            actions.moveToElement(element);
-            actions.perform();
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+	public login_po() {
+        this.driver = hooks.getDriver();
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
-	
+		
 	@Given("Website loaded")
 	public void website_Loaded() {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(login_locator.login.get("h1Login"))));

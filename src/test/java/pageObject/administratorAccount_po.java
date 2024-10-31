@@ -1,14 +1,11 @@
 package pageObject;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.time.Duration;
-import java.util.NoSuchElementException;
 import java.util.Random;
 
 import com.github.javafaker.Faker;
@@ -18,10 +15,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.interactions.Actions;
 
 import locators.administratorAccount_locator;
-import comum.comum;
+import comum.CommonSteps;
+import comum.hooks;
 import comum.variables;
 
 public class administratorAccount_po {
@@ -33,53 +30,25 @@ public class administratorAccount_po {
     private String email;
     private String password;
     private String prod;
+    
+    CommonSteps commonSteps = new CommonSteps(driver);
 
+    public administratorAccount_po() {
+		this.driver = hooks.getDriver();
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+	}
+    
     public void implementation(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void scrollElementIntoView(WebElement element) {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(element);
-        actions.perform();
-    }
-
-    public boolean scrollElementIntoView_status(By locator) {
-        try {
-            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-            Actions actions = new Actions(driver);
-            actions.moveToElement(element).perform();
-            return true;
-        } catch (org.openqa.selenium.TimeoutException e) {
-            return false;
-        }
-    }
-    
-    private boolean isElementPresent(By by) {
-        try {
-            driver.findElement(by);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-    
-	@Before
-	public void setUp() {
-		driver = comum.getWebDriver();
-	}
-
-	@After
-	public void tearDown() {
-		comum.tearDown();
-	}
-
-	public administratorAccount_po() {
-		super();
-	}
-
 	@Given("I am logged in as administrator")
 	public void i_am_logged_in_as_administrator() {
+		if (driver.getCurrentUrl().contains("Home") || commonSteps.isUserLoggedIn()) {
+		    System.out.println("User already logged in, skipping login.");
+		    return;
+		}
+		
 		String adminName = variables.ADMIN_NAME;
 		String adminUser = variables.ADMIN_USER;
 		String adminPass = variables.ADMIN_PASS;
@@ -88,7 +57,7 @@ public class administratorAccount_po {
 		driver.findElement(By.xpath(administratorAccount_locator.loginAdm.get("inputPassword"))).sendKeys(adminPass);
 		driver.findElement(By.xpath(administratorAccount_locator.loginAdm.get("butEnter"))).click();
 		
-		this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
 		
 		try {
 	        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(administratorAccount_locator.loginAdm.get("messageInvalid"))));
@@ -190,7 +159,7 @@ public class administratorAccount_po {
             elementToScroll = driver.findElement(By.xpath("//tr[td[contains(., '" + name + "')] and td[contains(., 'true')]]/td"));
         }
 
-        scrollElementIntoView(elementToScroll);
+        commonSteps.scrollElementIntoView(elementToScroll);
 	}
 	
 	@And("Complete registration already exists")
@@ -223,7 +192,7 @@ public class administratorAccount_po {
 				System.out.print("Unfortunately nothing happens when you click the edit button");
 			}
 			else {
-				boolean status = scrollElementIntoView_status(By.xpath("//tr[td[contains(., '" + name + "')] and td[contains(., 'false')]]/td"));
+				boolean status = commonSteps.scrollElementIntoViewStatus(By.xpath("//tr[td[contains(., '" + name + "')] and td[contains(., 'false')]]/td"));
 		        if (!status) {
 		            System.out.println("Account deleted successfully");
 		        }
@@ -345,7 +314,7 @@ public class administratorAccount_po {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(administratorAccount_locator.lisProd.get("titLis"))));
 		
 		WebElement productElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[contains(text(),\"" + prod + "\")]")));
-        scrollElementIntoView(productElement);		
+		commonSteps.scrollElementIntoView(productElement);		
 	}
 	
 	@Then("Message that the product already exists should appear")
@@ -358,7 +327,7 @@ public class administratorAccount_po {
 			        
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(administratorAccount_locator.lisProd.get("titLis"))));
 
-        boolean status = scrollElementIntoView_status(By.xpath("//tr[td[contains(text(), '" + typeProd + "')]]"));
+        boolean status = commonSteps.scrollElementIntoViewStatus(By.xpath("//tr[td[contains(text(), '" + typeProd + "')]]"));
 
         if (!status) {
             driver.findElement(By.xpath("//a[contains(text(), 'Cadastrar Produtos')]")).click();
@@ -367,10 +336,10 @@ public class administratorAccount_po {
             click_Button_Register();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(administratorAccount_locator.lisProd.get("titLis"))));
             this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-            scrollElementIntoView(driver.findElement(By.xpath("//tr[td[contains(text(), '" + typeProd + "')]]")));
+            commonSteps.scrollElementIntoView(driver.findElement(By.xpath("//tr[td[contains(text(), '" + typeProd + "')]]")));
             
         } else {
-        	scrollElementIntoView(driver.findElement(By.xpath("//tr[td[contains(text(), '" + typeProd + "')]]")));
+        	commonSteps.scrollElementIntoView(driver.findElement(By.xpath("//tr[td[contains(text(), '" + typeProd + "')]]")));
         }
 	}
 	
@@ -390,7 +359,7 @@ public class administratorAccount_po {
 			System.out.print("Unfortunately nothing happens when you click the edit button");
 		}
 		else {
-			boolean status = scrollElementIntoView_status(By.xpath("//tr[td[contains(text(), \"" + prod + "\")]]"));
+			boolean status = commonSteps.scrollElementIntoViewStatus(By.xpath("//tr[td[contains(text(), \"" + prod + "\")]]"));
 			
 			if(!status) {
 				System.out.print("Account deleted successfully");

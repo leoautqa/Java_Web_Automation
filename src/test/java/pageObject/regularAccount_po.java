@@ -1,19 +1,15 @@
 package pageObject;
 
 import java.time.Duration;
-import java.util.NoSuchElementException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import comum.comum;
+import comum.CommonSteps;
+import comum.hooks;
 import comum.variables;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -22,40 +18,24 @@ import locators.regularAccount_locator;
 
 public class regularAccount_po {
 	
-	administratorAccount_po administratorAccount = new administratorAccount_po();
-	
 	private WebDriver driver;
 	private WebDriverWait wait;
 	
-	@Before
-	public void setUp() {
-		driver = comum.getWebDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+	administratorAccount_po administratorAccount = new administratorAccount_po();
+	CommonSteps commonSteps = new CommonSteps(driver);
+	
+	public regularAccount_po() {
+		this.driver = hooks.getDriver();
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
 		administratorAccount.implementation(driver);
 	}
 
-	@After
-	public void tearDown() {
-		comum.tearDown();
-	}
-
-	public regularAccount_po() {
-		super();
-	}
-	
-	public boolean scrollElementIntoView_status(WebElement element) {
-    	try {
-            Actions actions = new Actions(driver);
-            actions.moveToElement(element);
-            actions.perform();
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
 	@Given("I am logged in as regular")
 	public void i_am_logged_in_as_regular() {
+		if (driver.getCurrentUrl().contains("Home") || commonSteps.isUserLoggedIn()) {
+		    System.out.println("User already logged in, skipping login.");
+		    return;
+		}		
 		
 		String regularName = variables.REGULAR_NAME;
 		String regularUser = variables.REGULAR_USER;
@@ -65,7 +45,7 @@ public class regularAccount_po {
 		driver.findElement(By.xpath(regularAccount_locator.loginReg.get("inputPassword"))).sendKeys(adminPass);
 		driver.findElement(By.xpath(regularAccount_locator.loginReg.get("butEnter"))).click();
 		
-		this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
 		
 		try {
 	        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(regularAccount_locator.loginReg.get("messageInvalid"))));
@@ -136,7 +116,7 @@ public class regularAccount_po {
 		try {
 			driver.findElement(By.xpath(regularAccount_locator.homeReg.get("inputSear"))).sendKeys("No picture");
 			search();
-			boolean status = scrollElementIntoView_status(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(regularAccount_locator.homeReg.get("msNoProdu")))));
+			boolean status = commonSteps.scrollElementIntoViewStatus(By.xpath(regularAccount_locator.homeReg.get("msNoProdu")));
 			if(status) {
 				click("Logout");
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(regularAccount_locator.loginReg.get("login"))));
