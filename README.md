@@ -22,7 +22,7 @@ To run this project, you need the following installed:
 
 1. Clone this repository:
     ```bash
-    git clone <REPOSITORY_URL>
+    git clone [<REPOSITORY_URL>](https://github.com/leoautqa/automation_Java.git)
     ```
 2. Navigate to the project directory:
     ```bash
@@ -39,3 +39,9 @@ You can execute the tests using Maven commands. To run all tests:
 
 ```bash
 mvn test
+```
+
+To run specific feature files, use the following command:
+```bash
+gmvn test -Dcucumber.options="src/test/resources/features/<feature_name>.feature"
+```
