@@ -22,7 +22,7 @@ To run this project, you need the following installed:
 
 1. Clone this repository:
     ```bash
-    git clone https://github.com/leoautqa/automation_Java.git
+    git clone 
     ```
 2. Navigate to the project directory:
     ```bash

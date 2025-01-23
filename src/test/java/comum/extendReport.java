@@ -21,13 +21,8 @@ public class extendReport {
     private static final String baseDir = System.getProperty("user.dir");
     private static final String testResultPath = baseDir + "/TestResults";
 
-    // Informações constantes para o relatório
-    private static final String applicationName = "front.serverest";
-    private static final String browserName = "Chrome";
+    private static final String applicationName = "amazon.com";
     private static final String osName = System.getProperty("os.name");
-//    private static final int imageWidth = 1290;
-//    private static final int imageHeight = 1080;
-//    private static final int imageQuality = 30;
     
     public static void extentReportInit() {
         try {
@@ -54,7 +49,6 @@ public class extendReport {
 
     private static void addSystemInfo() {
         _extentReports.setSystemInfo("Application", applicationName);
-        _extentReports.setSystemInfo("Browser", browserName);
         _extentReports.setSystemInfo("OS", osName);
     }
 
@@ -81,41 +75,4 @@ public class extendReport {
         }
     }
 	
-//	private static ExtentReports extent;
-//	private static ExtentTest test;
-//
-//	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-hh-mm-ss");
-//
-//	@Before
-//	public static void setup() {
-//		// Configurar o ExtentReports
-//		String reportFile = System.getProperty("user.dir") + "\\" + "Relatorio_Testes_"
-//				+ LocalDateTime.now().format(formatter) + ".html";
-//		ExtentSparkReporter spark = new ExtentSparkReporter(reportFile);
-//		//ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("extentReport.html");
-//		extent = new ExtentReports();
-//		extent.attachReporter(spark);
-//	}
-//
-//	public static void startTest(String testName) {
-//		test = extent.createTest(testName);
-//	}
-//
-//	public static void logInfo(String message) {
-//		test.info(message);
-//	}
-//
-//	public static void logPass(String message) {
-//		test.pass(message);
-//	}
-//
-//	public static void logFail(String message) {
-//		test.fail(message);
-//	}
-//
-//	@AfterAll
-//	public static void tearDown() {
-//		// Finalizar o relatório
-//		extent.flush();
-//	}
 }

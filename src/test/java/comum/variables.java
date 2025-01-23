@@ -2,18 +2,7 @@ package comum;
 
 public class variables {
 	// URL
-    public static final String URL = "https://front.serverest.dev/login";
+    public static final String URL = "https://www.amazon.com/?language=en_US";
     // Timeout
-    public static final int TIMEOUT = 60;
-
-    // Admin Account
-    public static final String ADMIN_NAME = "Leonardo Administrator Account";
-    public static final String ADMIN_USER = "leonardo@administrator.com";
-    public static final String ADMIN_PASS = "administratorAccount";
-
-    // Regular Account
-    public static final String REGULAR_NAME = "Leonardo Regular Account";
-    public static final String REGULAR_USER = "leonardo@regular.com";
-    public static final String REGULAR_PASS = "regularAccount";
-	
+    public static final int TIMEOUT = 60;	
 }

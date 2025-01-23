@@ -13,7 +13,7 @@ import io.cucumber.junit.Cucumber;
 						  			"json:target/JSONReports/report.json",
 						  			"html:terget/HtmlReports"},
 						  			//"com.aventstark.extenreport.cucumber.adapter.ExtentCucumberAdapter:"},
-				 tags="@regression"
+				 tags="@amazon"
 				)
 
 public class testRunner {

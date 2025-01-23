@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.aventstack.extentreports.ExtentTest;
@@ -27,22 +29,40 @@ public class hooks {
     public WebDriverWait wait;
     private static ExtentTest scenarioNode;
 
-    private static final String AdminAccountUrl = "https://front.serverest.dev/admin/home";
-    private static final String RegularAccountUrl = "https://front.serverest.dev/home";
-    private static final String LoginUrl = "https://front.serverest.dev/login";
-
     @BeforeAll
     public static void beforeTestRun() {
-        if (driver == null) {
-            System.setProperty("webdriver.chrome.driver", "src/main/java/driver/chromedriver.exe");
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-            driver = new ChromeDriver(chromeOptions);
+    	if (driver == null) {
+            
+            String browser = System.getProperty("browser", "firefox").toLowerCase();
+
+            switch (browser) {
+                case "chrome":
+                    System.setProperty("webdriver.chrome.driver", "src/main/java/driver/chromedriver.exe");
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.addArguments("--incognito");
+                    chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+                    driver = new ChromeDriver(chromeOptions);
+                    break;
+
+                case "firefox":
+                    System.setProperty("webdriver.gecko.driver", "src/main/java/driver/geckodriver.exe");
+                    FirefoxOptions firefoxOptions = new FirefoxOptions();
+                    firefoxOptions.addArguments("-private");
+                    firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+                    driver = new FirefoxDriver(firefoxOptions);
+                    break;
+
+                default:
+                    throw new IllegalArgumentException("Navegador não suportado: " + browser);
+            }
+
             driver.manage().window().maximize();
             driver.get(variables.URL);
         }
+
         extendReport.extentReportInit();
     }
+    
 
     @Before
     public static void beforeScenario(Scenario scenario) {
@@ -59,7 +79,6 @@ public class hooks {
         try {
             String featureName = scenario.getUri().getPath();
             featureName = featureName.substring(featureName.lastIndexOf("/") + 1).replace(".feature", "");
-            navigateBasedOnFeature(featureName);
 
             if (scenario.isFailed()) {
                 String errorMessage = "An error occurred in the scenario.";
@@ -86,28 +105,6 @@ public class hooks {
             System.out.println("WebDriver error in afterScenario: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Error in afterScenario: " + e.getMessage());
-        }
-    }
-
-    private static void navigateBasedOnFeature(String featureTitle) {
-        if (driver != null && driver.getCurrentUrl() != null) {
-            switch (featureTitle) {
-                case "administratorAccount":
-                    driver.navigate().to(AdminAccountUrl);
-                    System.out.println("Navigated to Administrator Account home page.");
-                    break;
-                case "regularAccount":
-                    driver.navigate().to(RegularAccountUrl);
-                    System.out.println("Navigated to Regular Account home page.");
-                    break;
-                case "Login":
-                    driver.navigate().to(LoginUrl);
-                    System.out.println("Navigated to Login page.");
-                    break;
-                default:
-                    System.out.println("Feature not recognized. No navigation performed.");
-                    break;
-            }
         }
     }
 
